@@ -24,7 +24,13 @@ ExportedObj/
 *.pdb
 *.opendb
 
+# Art
+*.png
+
 # Unity3D generated meta files
+*.meta
+*.cs.meta
+*.prefab.meta
 *.pidb.meta
 *.pdb.meta
 
