@@ -9,7 +9,7 @@ public class PlayerControl : MonoBehaviour, IPlayerController {
     private float speed;
 
     private ICollidable m_collidable;
-    private int m_currentLives = 3;
+    private int m_currentLives = 1;
     private int m_currentPrawns = 0;
     private int m_score = 0;
     public int currentLives
@@ -90,7 +90,10 @@ public class PlayerControl : MonoBehaviour, IPlayerController {
             m_collidable = null;
             //Destroy GameObject when lives = 0
             if (currentLives <= 0)
+            {
+                PlayerDataRef.Score = currentScore;
                 Destroy(gameObject);
+            }
 
         }
     }

@@ -16,14 +16,14 @@ public class Prawn : CollidableController {
 
     public override void CollisionResolve()
     {
-        if(enabled && player != null)
+        if(enabled && Player != null)
         {
             //increment player prawns count
-            player.currentPrawns++;
+            Player.currentPrawns++;
             //increment player score
-            player.currentScore += scoreIcrement;
+            Player.currentScore += scoreIcrement;
             StartCoroutine(DisapearanceAni());
-            Debug.Log("Prawns: " + player.currentPrawns);
+            Debug.Log("Prawns: " + Player.currentPrawns);
 
         }
     }

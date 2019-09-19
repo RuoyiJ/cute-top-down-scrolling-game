@@ -9,13 +9,13 @@ public abstract class CollidableController : MonoBehaviour, ICollidable
     public Vector2 heightTreshold;
     public abstract CollidableType Collidable { get; }
 
-    public IPlayerController player { get; private set; }
+    public IPlayerController Player { get; private set; }
 
     public float ScrollSpeed { get; private set; }
 
     protected virtual void Awake()
     {
-        player = null;
+        Player = null;
     }
 
     protected virtual void Update()
@@ -26,19 +26,19 @@ public abstract class CollidableController : MonoBehaviour, ICollidable
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if(enabled && player == null &&
-            (player = other.GetComponent<IPlayerController>())!=null &&
-            !player.enabled)
+        if(enabled && Player == null &&
+            (Player = other.GetComponent<IPlayerController>())!=null &&
+            !Player.enabled)
         {
-            player = null;
+            Player = null;
         }
     }
 
     protected virtual void OnTriggerExit2D(Collider2D other)
     {
-        if(player != null && player == other.GetComponent<IPlayerController>())
+        if(Player != null && Player == other.GetComponent<IPlayerController>())
         {
-            player = null;
+            Player = null;
         }
     }
     public abstract void CollisionResolve();

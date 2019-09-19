@@ -11,9 +11,9 @@ public class AutoScrollBackground : MonoBehaviour {
     float scaleFactor;
     Vector3 move;
 
-    SpriteRenderer bg, top;
-    public SpriteRenderer scroll1, scroll2;
-    public ObjectManager manager;
+    SpriteRenderer bg;
+    [SerializeField]
+    SpriteRenderer top, scroll1, scroll2;
 
     public static int DistanceLeft { get; private set; }
     public bool IsTargetHit { get; private set; }
@@ -21,7 +21,6 @@ public class AutoScrollBackground : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         bg = GetComponent<SpriteRenderer>();
-        top = transform.Find("Top").GetComponent<SpriteRenderer>();
 
         //put bg to bottom
         scaleFactor = transform.localScale.x;
@@ -34,7 +33,7 @@ public class AutoScrollBackground : MonoBehaviour {
         IsScrolling = false;
         IsTargetHit = false;
         firstpass = false;
-        move = new Vector3(0, ScrollSpeed, 0) * Time.deltaTime;
+        move = new Vector3(0, ScrollSpeed, 0);
         SetDistanceLeft();
     }
 	
@@ -48,21 +47,21 @@ public class AutoScrollBackground : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0))
             IsScrolling = true;
-        if (IsScrolling && !IsImgPassed(bg) && !PlayerMovement.IsAutoMove)
+        if (IsScrolling && !IsImgPassed(bg) && PlayerMovement.IsAutoMoveFinish)
         {
-            transform.position -= move;
+            transform.position -= move * Time.deltaTime;
             distanceScrolled += ScrollSpeed * Time.deltaTime;
         }
-        if (IsScrolling && IsImgPassed(bg) && !firstpass && !PlayerMovement.IsAutoMove && !IsEndReach())
+        if (IsScrolling && IsImgPassed(bg) && !firstpass && PlayerMovement.IsAutoMoveFinish && !IsEndReach())
         {
-            scroll1.transform.position -= move;
+            scroll1.transform.position -= move * Time.deltaTime;
             scroll2.transform.position = scroll1.transform.position + new Vector3(0, scroll1.sprite.bounds.size.y, 0) * scaleFactor;
             top.transform.position = scroll2.transform.position + new Vector3(0, scroll1.sprite.bounds.size.y, 0) * scaleFactor;
             distanceScrolled += ScrollSpeed * Time.deltaTime;
         }
-        else if (IsScrolling && IsImgPassed(bg) && firstpass && !PlayerMovement.IsAutoMove && !IsEndReach())
+        else if (IsScrolling && IsImgPassed(bg) && firstpass && PlayerMovement.IsAutoMoveFinish && !IsEndReach())
         {
-            scroll2.transform.position -= move;
+            scroll2.transform.position -= move * Time.deltaTime;
             scroll1.transform.position = scroll2.transform.position + new Vector3(0, scroll1.sprite.bounds.size.y, 0) * scaleFactor;
             top.transform.position = scroll1.transform.position + new Vector3(0, scroll1.sprite.bounds.size.y, 0) * scaleFactor;
             distanceScrolled += ScrollSpeed * Time.deltaTime;
@@ -70,7 +69,7 @@ public class AutoScrollBackground : MonoBehaviour {
         if (IsScrolling && IsEndReach() && top.transform.position.y + top.sprite.bounds.size.y / 2 * scaleFactor
             > Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y)
         {
-            transform.position -= move;
+            transform.position -= move * Time.deltaTime;
             distanceScrolled += ScrollSpeed * Time.deltaTime;
         }
         if (top.transform.position.y + top.sprite.bounds.size.y / 2 * scaleFactor - ScrollSpeed * Time.deltaTime
@@ -99,10 +98,12 @@ public class AutoScrollBackground : MonoBehaviour {
 
     bool IsEndReach()
     {
-        if (Level.TargetDistance - distanceScrolled < scroll1.sprite.bounds.size.y * scaleFactor)
-        {
+        //if (Level.TargetDistance - distanceScrolled < scroll1.sprite.bounds.size.y * scaleFactor)
+        //{
+        //    return true;
+        //}
+        if (Level.IsEnd)
             return true;
-        }
         return false;
     }
     void SetDistanceLeft()

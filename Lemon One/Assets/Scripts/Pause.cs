@@ -10,15 +10,25 @@ public class Pause : MonoBehaviour {
         paused = !paused;
         if (paused)
         {
-            Time.timeScale = 0;
-            AutoScrollBackground.IsScrolling = false;
+            PauseGame();
         }
         else
         {
-            Time.timeScale = 1;
-            AutoScrollBackground.IsScrolling = true;
+            ResumeGame();
         }
 
         Debug.Log(Time.timeScale);
+    }
+
+    public static void PauseGame()
+    {
+        Time.timeScale = 0;
+        AutoScrollBackground.IsScrolling = false;
+    }
+
+    public static void ResumeGame()
+    {
+        Time.timeScale = 1;
+        AutoScrollBackground.IsScrolling = true;
     }
 }

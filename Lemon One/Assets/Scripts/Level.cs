@@ -4,11 +4,10 @@ using System.Collections.Generic;
 public class Level : MonoBehaviour
 {
     public static int TargetDistance { get; private set; }
+    public static bool IsEnd { get; private set; }
     public static float SpeedMultiplier { get; private set; }
     //private List<int> columnIndexs;
 
-    [SerializeField]
-    ObjectManager objManager;
     [SerializeField]
     float spawnTime = 0.1f;
     float timer = 0;
@@ -20,11 +19,13 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
+        Pause.ResumeGame();
+        ObjectManager.GameOverPanel.gameObject.SetActive(false);
         TargetDistance = 100;
         SpeedMultiplier = 1.2f;
         //columnIndexs = new List<int>();
         LoadCollidables();
-
+        IsEnd = false;
 
     }
     private void Update()
@@ -41,6 +42,8 @@ public class Level : MonoBehaviour
                 GenerateRowFromList();
             }
         }
+        GameOver();
+        Win();
     }
     #region Random Spawning
     /*void SpawnPrawns()
@@ -94,13 +97,13 @@ public class Level : MonoBehaviour
     private void LoadCollidables()
     {
         levelData = FileReader.ReadTextFile("Assets/Resources/LevelData/test.txt");
-        Debug.Log(levelData == null);
+        //Debug.Log(levelData == null);
     }
 
     private void GenerateRowFromList()
     {
         string bottomRow = levelData[levelData.Count - 1];
-        Debug.Log(bottomRow);
+        //Debug.Log(bottomRow);
         for (int i = 0; i < bottomRow.Length; i++)
         {
             switch(bottomRow[i])
@@ -122,5 +125,25 @@ public class Level : MonoBehaviour
         levelData.RemoveAt(levelData.Count - 1);
     }
 
+    private void GameOver()
+    {
+        if (ObjectManager.Player.currentLives == 0)
+        {
+            ObjectManager.GameOverPanel.gameObject.SetActive(true);
+            Pause.PauseGame();
+        }
+    }
+    private void Win()
+    {
+        if(levelData.Count<=0 && ObjectManager.Player.currentLives > 0)
+        {
+            IsEnd = true;
+            if (!AutoScrollBackground.IsScrolling)
+            {
+                ObjectManager.CompletionPanel.gameObject.SetActive(true);
+                Pause.PauseGame();
+            }
+        }
+    }
     #endregion
 }

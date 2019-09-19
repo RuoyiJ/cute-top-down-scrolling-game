@@ -28,7 +28,7 @@ public class Rubbish : CollidableController {
 
     public override void CollisionResolve()
     {
-        if(enabled && player != null)
+        if(enabled && Player != null)
         {
             //player's currentLives--
             StartCoroutine(ResetPlayer());
@@ -39,8 +39,8 @@ public class Rubbish : CollidableController {
 
     private IEnumerator ResetPlayer()
     {
-        player.currentLives--;
-        Debug.Log("Lives: " + player.currentLives);
+        Player.currentLives--;
+        Debug.Log("Lives: " + Player.currentLives);
 
         obsCollider.enabled = false;
         yield return null;
