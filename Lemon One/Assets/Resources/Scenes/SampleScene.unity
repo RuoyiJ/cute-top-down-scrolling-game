@@ -1478,7 +1478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objManager: {fileID: 1345756296}
-  spawnTime: 0.5
+  spawnTime: 0.3
 --- !u!4 &1772690203
 Transform:
   m_ObjectHideFlags: 0
@@ -1801,7 +1801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb5f306074c2746a0b9ab2367303b128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScrollSpeed: 3
+  ScrollSpeed: 4
   scroll1: {fileID: 1942598839}
   scroll2: {fileID: 11284885}
   manager: {fileID: 1345756296}

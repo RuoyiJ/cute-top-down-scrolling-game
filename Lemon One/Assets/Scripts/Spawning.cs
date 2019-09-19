@@ -14,7 +14,7 @@ public class Spawning : MonoBehaviour {
     }
     
     // Random Spawn object in column without overlapping,return x index
-    public static void RandomSpawn(string tag, int columnIndex)
+    public static void SpawnObject(string tag, int columnIndex)
     {
         GameObject obj = ObjectPool.sharedInstance.GetPooledObject(tag);
         if (obj != null)
@@ -48,4 +48,6 @@ public class Spawning : MonoBehaviour {
         }
         return -1;
     }
+
+
 }

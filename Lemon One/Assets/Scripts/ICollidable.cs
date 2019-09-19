@@ -5,12 +5,12 @@ using UnityEngine;
 public enum CollidableType
 {
     Prawn,
-    Rabbish,
-    Sharp
+    Rubbish,
+    Shark
 }
 
 public interface ICollidable {
-    CollidableType collidable { get; }
+    CollidableType Collidable { get; }
     bool enabled { get; }
     void CollisionResolve();
     void Scrolling();

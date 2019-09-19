@@ -7,7 +7,7 @@ public abstract class CollidableController : MonoBehaviour, ICollidable
     protected bool isOffScreen = false;
     public Vector2 widthTreshold;
     public Vector2 heightTreshold;
-    public abstract CollidableType collidable { get; }
+    public abstract CollidableType Collidable { get; }
 
     public IPlayerController player { get; private set; }
 
@@ -45,7 +45,7 @@ public abstract class CollidableController : MonoBehaviour, ICollidable
 
     public virtual void Scrolling()
     {
-        ScrollSpeed = 5f * Level.SpeedMultiplier;
+        ScrollSpeed = 6f * Level.SpeedMultiplier;
         if (PlayerMovement.IsAutoMoveFinish)
             transform.position -= new Vector3(0, ScrollSpeed * Time.deltaTime);
     }

@@ -6,7 +6,7 @@ public class Prawn : CollidableController {
 
     private int scoreIcrement = 10;
 
-    public override CollidableType collidable
+    public override CollidableType Collidable
     {
         get
         {

@@ -2,26 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rabbish : CollidableController {
+public class Rubbish : CollidableController {
 
-    public List<Sprite> sprites = new List<Sprite>();
-    SpriteRenderer rabbishSprite;
-    Collider2D rCollider;
+    [SerializeField]
+    private List<Sprite> sprites = new List<Sprite>();
+    private SpriteRenderer rubbishSprite;
 
-    public override CollidableType collidable
+    protected Collider2D obsCollider;
+
+    public override CollidableType Collidable
     {
         get
         {
-            return CollidableType.Rabbish;
+            return CollidableType.Rubbish;
         }
     }
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         int r = Random.Range(0, 3);
-        rabbishSprite = GetComponent<SpriteRenderer>();
-        rabbishSprite.sprite = sprites[r];
-        rCollider = GetComponent<BoxCollider2D>();
-        rCollider.enabled = true;
+        rubbishSprite = GetComponent<SpriteRenderer>();
+        rubbishSprite.sprite = sprites[r];
+        obsCollider = GetComponent<BoxCollider2D>();
+        obsCollider.enabled = true;
     }
 
     public override void CollisionResolve()
@@ -40,7 +42,7 @@ public class Rabbish : CollidableController {
         player.currentLives--;
         Debug.Log("Lives: " + player.currentLives);
 
-        rCollider.enabled = false;
+        obsCollider.enabled = false;
         yield return null;
         
     }
