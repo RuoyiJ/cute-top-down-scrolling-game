@@ -3,15 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawning : MonoBehaviour {
-    //not used
-    enum ColumnView
-    {
-        One,
-        Two,
-        Three,
-        Four,
-        Five
-    }
+    
     
     // Random Spawn object in column without overlapping,return x index
     public static void SpawnObject(string tag, int columnIndex)
@@ -32,6 +24,8 @@ public class Spawning : MonoBehaviour {
         int columnWidth = Screen.width / 5;
         switch (columnIndex)
         {
+            case -1:
+                return - columnWidth;
             case 0:
                 return columnWidth / 2;
             case 1:
@@ -42,6 +36,8 @@ public class Spawning : MonoBehaviour {
                 return columnWidth * 3 + columnWidth / 2;
             case 4:
                 return columnWidth * 4 + columnWidth / 2;
+            case 5:
+                return Screen.width +  columnWidth;
             default:
                 Debug.Log("columnIndex out of range");
                 break;

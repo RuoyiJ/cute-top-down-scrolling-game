@@ -14,7 +14,7 @@ public class LoadScene : MonoBehaviour {
     public void LoadNext()
     {
         Pause.ResumeGame();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // TODO +1
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);  
     }
 
     public void LoadMainMenu()

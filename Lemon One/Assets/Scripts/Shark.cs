@@ -24,7 +24,7 @@ public class Shark : Rubbish {
         obsCollider = GetComponent<BoxCollider2D>();
         obsCollider.enabled = true;
         screenPos = Camera.main.WorldToScreenPoint(transform.position);
-        timer = 0;
+        //timer = 0;
         if (screenPos.x < 0)
         {
             flip = true;

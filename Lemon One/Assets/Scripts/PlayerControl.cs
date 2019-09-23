@@ -42,23 +42,22 @@ public class PlayerControl : MonoBehaviour, IPlayerController {
 
     void HandleInput()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            rigid.velocity = new Vector2(0, 1) * speed * Time.deltaTime;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            rigid.velocity = new Vector2(0, -1) * speed * Time.deltaTime;
-        }
-        else if (Input.GetKey(KeyCode.D))
+        SpriteRenderer sprRen = GetComponent<SpriteRenderer>();
+        float width = sprRen.sprite.bounds.size.x;
+        float minX = Camera.main.ScreenToWorldPoint(new Vector3(0,0)).x + width;
+        float maxX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,0)).x - width;
+        
+        if (Input.GetKey(KeyCode.D) && transform.position.x < maxX)
         {
             rigid.velocity = new Vector2(1, 0) * speed * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A) && transform.position.x > minX)
         {
             rigid.velocity = new Vector2(-1, 0) * speed * Time.deltaTime;
         }
         else rigid.velocity = Vector2.zero;
+
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, minX, maxX), transform.position.y);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -91,7 +90,8 @@ public class PlayerControl : MonoBehaviour, IPlayerController {
             //Destroy GameObject when lives = 0
             if (currentLives <= 0)
             {
-                PlayerDataRef.Score = currentScore;
+                PlayerDataRef.currentScore = currentScore;
+                PlayerDataRef.currentPrawns = currentPrawns;
                 Destroy(gameObject);
             }
 

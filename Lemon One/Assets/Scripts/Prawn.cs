@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Prawn : CollidableController {
 
-    private int scoreIcrement = 10;
+    private int scoreIcrement = 100;
 
     public override CollidableType Collidable
     {
@@ -20,6 +20,9 @@ public class Prawn : CollidableController {
         {
             //increment player prawns count
             Player.currentPrawns++;
+            if (Player.currentPrawns > 0 && Player.currentPrawns % 5 == 0)
+                Level.SpeedMultiplier += 0.1f;
+            
             //increment player score
             Player.currentScore += scoreIcrement;
             StartCoroutine(DisapearanceAni());

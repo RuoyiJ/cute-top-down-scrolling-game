@@ -5,7 +5,7 @@ public class Level : MonoBehaviour
 {
     public static int TargetDistance { get; private set; }
     public static bool IsEnd { get; private set; }
-    public static float SpeedMultiplier { get; private set; }
+    public static float SpeedMultiplier { get; set; }
     //private List<int> columnIndexs;
 
     [SerializeField]
@@ -22,7 +22,7 @@ public class Level : MonoBehaviour
         Pause.ResumeGame();
         ObjectManager.GameOverPanel.gameObject.SetActive(false);
         TargetDistance = 100;
-        SpeedMultiplier = 1.2f;
+        SpeedMultiplier = 1f;
         //columnIndexs = new List<int>();
         LoadCollidables();
         IsEnd = false;
@@ -109,14 +109,14 @@ public class Level : MonoBehaviour
             switch(bottomRow[i])
             {
                 case prawnObj:
-                    Spawning.SpawnObject("Prawn", i);
+                    Spawning.SpawnObject("Prawn", i-1);
                     Debug.Log(i);
                     break;
                 case rubbishObj:
-                    Spawning.SpawnObject("Rabbish", i);
+                    Spawning.SpawnObject("Rabbish", i-1);
                     break;
                 case sharkObj:
-                    Spawning.SpawnObject("Shark", i);
+                    Spawning.SpawnObject("Shark", i-1);
                     break;
                 default:
                     break;

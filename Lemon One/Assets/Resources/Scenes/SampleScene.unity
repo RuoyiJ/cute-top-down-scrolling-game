@@ -1251,7 +1251,7 @@ Prefab:
     - target: {fileID: 114652595000769110, guid: 048a1204a2fa58846858a6777ff53cfb,
         type: 2}
       propertyPath: speed
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 048a1204a2fa58846858a6777ff53cfb, type: 2}
@@ -2075,6 +2075,10 @@ MonoBehaviour:
     amountToPool: 10
     shouldExpand: 1
   - objectToPool: {fileID: 1933280597390412, guid: fd4fb54f8a7700048aba596d2be01846,
+      type: 2}
+    amountToPool: 5
+    shouldExpand: 1
+  - objectToPool: {fileID: 1854516011467216, guid: afd6a454e4fb2664ab4a7a3813a807a9,
       type: 2}
     amountToPool: 5
     shouldExpand: 1
