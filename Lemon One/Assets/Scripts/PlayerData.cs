@@ -12,6 +12,7 @@ public class PlayerData {
     public PlayerData()
     {
         BestRecord = new int[4];
+        LevelUnlocked = 1;
     }
 
     public PlayerData(int[] bestRecord, int totalPrawns, int playingMins, int levelUnlocked)

@@ -14,6 +14,10 @@ public class InGameUI : MonoBehaviour {
         prawns = ObjectManager.Prawns;
         score = ObjectManager.Score;
 
+        lives.text = ObjectManager.Player.currentLives.ToString();
+        prawns.text = ObjectManager.Player.currentPrawns.ToString();
+        score.text = ObjectManager.Player.currentScore.ToString();
+
     }
 
 

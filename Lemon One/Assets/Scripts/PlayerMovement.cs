@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         {
             IsAutoMove = false;
             IsAutoMoveFinish = true;
+            GetComponent<PlayerControl>().IsMoving = true;
         }
 
     }

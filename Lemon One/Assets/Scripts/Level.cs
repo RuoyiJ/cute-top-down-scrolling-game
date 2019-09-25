@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour
 {
@@ -17,12 +18,16 @@ public class Level : MonoBehaviour
     public const char sharkObj = '3';
     List<string> levelData;
 
+    private void Awake()
+    {
+        TargetDistance = 100;
+        SpeedMultiplier = 1f;
+    }
     private void Start()
     {
         Pause.ResumeGame();
         ObjectManager.GameOverPanel.gameObject.SetActive(false);
-        TargetDistance = 100;
-        SpeedMultiplier = 1f;
+        
         //columnIndexs = new List<int>();
         LoadCollidables();
         IsEnd = false;
@@ -38,8 +43,8 @@ public class Level : MonoBehaviour
             //SpawnRabbish();
             if (levelData.Count > 0)
             {
-                timer = 0;
                 GenerateRowFromList();
+                timer = 0;
             }
         }
         GameOver();
@@ -96,7 +101,9 @@ public class Level : MonoBehaviour
     #region LoadLevelFromTxtFile
     private void LoadCollidables()
     {
-        levelData = FileReader.ReadTextFile("Assets/Resources/LevelData/test.txt");
+        string path = "Assets/Resources/LevelData/level" + SceneManager.GetActiveScene().buildIndex + ".txt";
+        //string path = "Assets/Resources/LevelData/level1.txt";
+        levelData = FileReader.ReadTextFile(path);
         //Debug.Log(levelData == null);
     }
 
@@ -138,7 +145,8 @@ public class Level : MonoBehaviour
         if(levelData.Count<=0 && ObjectManager.Player.currentLives > 0)
         {
             IsEnd = true;
-            if (!AutoScrollBackground.IsScrolling)
+            timer += Time.deltaTime;
+            if (timer > 3f)
             {
                 ObjectManager.CompletionPanel.gameObject.SetActive(true);
                 Pause.PauseGame();

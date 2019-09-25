@@ -9,5 +9,7 @@ public interface IPlayerController {
     int currentLives { get; set; }
     int currentPrawns { get; set; }
     int currentScore { get; set; }
+    int currentGridIndex { get; set; }
+    bool IsMoving { get; set; }
 
 }

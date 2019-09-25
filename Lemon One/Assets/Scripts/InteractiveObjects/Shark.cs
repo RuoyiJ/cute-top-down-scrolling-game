@@ -24,18 +24,19 @@ public class Shark : Rubbish {
         obsCollider = GetComponent<BoxCollider2D>();
         obsCollider.enabled = true;
         screenPos = Camera.main.WorldToScreenPoint(transform.position);
-        //timer = 0;
+        timer = 0;
+        waitTime = 0;
+        pause = false;
+        backwards = false;
         if (screenPos.x < 0)
         {
             flip = true;
             GetComponent<SpriteRenderer>().flipX = true;
-            //Debug.Log("fliped");
         }
         else if (screenPos.x > Screen.width)
         {
             flip = false;
             GetComponent<SpriteRenderer>().flipX = false;
-            //Debug.Log("not fliped");
         }
         else
             Debug.Log("Shark in wrong position");
@@ -51,18 +52,18 @@ public class Shark : Rubbish {
     //TO DO: USE FSM INSTEAD OF THIS BUGGY MOVEMENT
     private void Movement()
     {
-        if (timer >= startAttackTime)
+        if (timer >= startAttackTime / Level.SpeedMultiplier)
         {
-            Vector3 move = new Vector3(speed * Time.deltaTime, 0);
+            Vector3 move = new Vector3(speed * Level.SpeedMultiplier * Time.deltaTime, 0);
             float xPosOnScreen = Camera.main.WorldToScreenPoint(transform.position).x;
-            if ((flip && xPosOnScreen >= Screen.width / 3) ||
-                (!flip && xPosOnScreen < Screen.width * 2 / 3))
+            if ((flip && xPosOnScreen > Screen.width / 5) ||
+                (!flip && xPosOnScreen < Screen.width * 4 / 5))
             {
                 backwards = true;
                 pause = true;
                 waitTime += Time.deltaTime;
             }
-            else if((flip && xPosOnScreen < -Screen.width / 3) ||
+            else if((flip && xPosOnScreen <= -Screen.width / 3) ||
                 (!flip && xPosOnScreen >= Screen.width * 4 / 3))
             {
                 backwards = false;
@@ -74,12 +75,14 @@ public class Shark : Rubbish {
                 pause = false;
                 waitTime = 0;
             }
-            if ((flip && !backwards) ||(!flip && backwards) && !pause)
+            if ((flip && !backwards) ||(!flip && backwards))
             {
+                if(!pause)
                 transform.position += move;
             }
-            else if ((flip && backwards) || (!flip && !backwards) && !pause)
+            else if ((flip && backwards) || (!flip && !backwards))
             {
+                if(!pause)
                 transform.position -= move;
             }
         }

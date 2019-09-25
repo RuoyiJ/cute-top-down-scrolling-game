@@ -25,6 +25,7 @@ public class MainMenuButtons : MonoBehaviour {
     public void DeleteData()
     {
         SaveDataManager.DeleteData();
+        SaveDataManager.CreatePlayerData();
     }
 
     public void LoadLevelOne()

@@ -40,11 +40,9 @@ public class Rubbish : CollidableController {
     private IEnumerator ResetPlayer()
     {
         Player.currentLives--;
-        Debug.Log("Lives: " + Player.currentLives);
-
         obsCollider.enabled = false;
         yield return null;
-        
+
     }
 
     //void OnCollisionEnter2D(Collision2D other)

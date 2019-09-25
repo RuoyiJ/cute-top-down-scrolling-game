@@ -20,13 +20,12 @@ public class Prawn : CollidableController {
         {
             //increment player prawns count
             Player.currentPrawns++;
-            if (Player.currentPrawns > 0 && Player.currentPrawns % 5 == 0)
-                Level.SpeedMultiplier += 0.1f;
-            
+            if (Player.currentPrawns > 0 && Player.currentPrawns % 5 == 0 && Level.SpeedMultiplier < 2f)
+                Level.SpeedMultiplier += 0.12f;
+            Debug.Log("speed multiplier: " + Level.SpeedMultiplier);
             //increment player score
             Player.currentScore += scoreIcrement;
             StartCoroutine(DisapearanceAni());
-            Debug.Log("Prawns: " + Player.currentPrawns);
 
         }
     }
@@ -34,8 +33,6 @@ public class Prawn : CollidableController {
     private IEnumerator DisapearanceAni()
     {
         //TO DO 1ST: start animation for disappearance
-        //TO DO 2ND: LOGIC FOR GAINING A LIVE AFTER EATING 100 PRAWNS
-        //enabled = false;
         gameObject.SetActive(false);
         yield return null;
     }
