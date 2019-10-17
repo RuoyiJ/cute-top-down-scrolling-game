@@ -11,7 +11,7 @@ public abstract class CollidableController : MonoBehaviour, ICollidable
 
     public IPlayerController Player { get; private set; }
 
-    public float ScrollSpeed { get; private set; }
+    public float ScrollSpeed { get; private set; } 
 
     protected virtual void Awake()
     {

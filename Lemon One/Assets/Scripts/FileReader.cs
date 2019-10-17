@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 public class FileReader {
 
@@ -25,5 +26,9 @@ public class FileReader {
             return rows;
         }
         return null;
+    }
+
+    public static List<string> TextAssetToList(TextAsset ta) {
+        return new List<string>(ta.text.Split(System.Environment.NewLine.ToCharArray()));
     }
 }

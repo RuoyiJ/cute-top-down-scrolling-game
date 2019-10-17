@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AutoScrollBackground : MonoBehaviour {
-    public float ScrollSpeed;
+    [SerializeField]
+    float scrollSpeed;
     float distanceScrolled;
+    public static float ScrollSpeed { get; private set; }
     public static bool IsScrolling { get; set; }
     bool firstpass;
     float screenHeight;
@@ -33,7 +35,8 @@ public class AutoScrollBackground : MonoBehaviour {
         IsScrolling = false;
         IsTargetHit = false;
         firstpass = false;
-        move = new Vector3(0, ScrollSpeed * Level.SpeedMultiplier, 0);
+        ScrollSpeed = scrollSpeed * Level.SpeedMultiplier;
+        move = new Vector3(0, ScrollSpeed, 0);
         SetDistanceLeft();
     }
 	
@@ -45,34 +48,35 @@ public class AutoScrollBackground : MonoBehaviour {
 
     void ScrollingBackground()
     {
+        ScrollSpeed = scrollSpeed * Level.SpeedMultiplier;
         if (Input.GetMouseButtonDown(0))
             IsScrolling = true;
         if (IsScrolling && !IsImgPassed(bg) && PlayerMovement.IsAutoMoveFinish)
         {
             transform.position -= move * Time.deltaTime;
-            distanceScrolled += ScrollSpeed * Level.SpeedMultiplier * Time.deltaTime;
+            distanceScrolled += scrollSpeed * Level.SpeedMultiplier * Time.deltaTime;
         }
         if (IsScrolling && IsImgPassed(bg) && !firstpass && PlayerMovement.IsAutoMoveFinish && !IsEndReach())
         {
             scroll1.transform.position -= move * Time.deltaTime;
             scroll2.transform.position = scroll1.transform.position + new Vector3(0, scroll1.sprite.bounds.size.y, 0) * scaleFactor;
             top.transform.position = scroll2.transform.position + new Vector3(0, scroll1.sprite.bounds.size.y, 0) * scaleFactor;
-            distanceScrolled += ScrollSpeed * Level.SpeedMultiplier * Time.deltaTime;
+            distanceScrolled += scrollSpeed * Level.SpeedMultiplier * Time.deltaTime;
         }
         else if (IsScrolling && IsImgPassed(bg) && firstpass && PlayerMovement.IsAutoMoveFinish && !IsEndReach())
         {
             scroll2.transform.position -= move * Time.deltaTime;
             scroll1.transform.position = scroll2.transform.position + new Vector3(0, scroll1.sprite.bounds.size.y, 0) * scaleFactor;
             top.transform.position = scroll1.transform.position + new Vector3(0, scroll1.sprite.bounds.size.y, 0) * scaleFactor;
-            distanceScrolled += ScrollSpeed * Level.SpeedMultiplier * Time.deltaTime;
+            distanceScrolled += scrollSpeed * Level.SpeedMultiplier * Time.deltaTime;
         }
         if (IsScrolling && IsEndReach() && top.transform.position.y + top.sprite.bounds.size.y / 2 * scaleFactor
             > Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y)
         {
             transform.position -= move * Time.deltaTime;
-            distanceScrolled += ScrollSpeed * Level.SpeedMultiplier * Time.deltaTime;
+            distanceScrolled += scrollSpeed * Level.SpeedMultiplier * Time.deltaTime;
         }
-        if (top.transform.position.y + top.sprite.bounds.size.y / 2 * scaleFactor - ScrollSpeed * Level.SpeedMultiplier * Time.deltaTime
+        if (top.transform.position.y + top.sprite.bounds.size.y / 2 * scaleFactor - scrollSpeed * Level.SpeedMultiplier * Time.deltaTime
             <= Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y)
         {
             IsScrolling = false;

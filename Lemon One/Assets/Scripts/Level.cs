@@ -9,14 +9,16 @@ public class Level : MonoBehaviour
     public static float SpeedMultiplier { get; set; }
     //private List<int> columnIndexs;
 
+    float distanceCounter = 0;
     [SerializeField]
-    float spawnTime = 0.1f;
-    float timer = 0;
+    float spawnDistance = 0.8f;
 
     public const char prawnObj = '1';
     public const char rubbishObj = '2';
     public const char sharkObj = '3';
     List<string> levelData;
+
+    TextAsset textFile;
 
     private void Awake()
     {
@@ -35,7 +37,7 @@ public class Level : MonoBehaviour
     }
     private void Update()
     {
-        if (AutoScrollBackground.DistanceLeft > 0 && (timer += Time.deltaTime) > spawnTime &&
+        if (AutoScrollBackground.DistanceLeft > 0 && (distanceCounter += AutoScrollBackground.ScrollSpeed * Time.deltaTime) > spawnDistance &&
             (PlayerMovement.IsAutoMoveFinish))
         {
             //columnIndexs.Clear();
@@ -44,7 +46,7 @@ public class Level : MonoBehaviour
             if (levelData.Count > 0)
             {
                 GenerateRowFromList();
-                timer = 0;
+                distanceCounter = 0;
             }
         }
         GameOver();
@@ -101,10 +103,8 @@ public class Level : MonoBehaviour
     #region LoadLevelFromTxtFile
     private void LoadCollidables()
     {
-        string path = "Assets/Resources/LevelData/level" + SceneManager.GetActiveScene().buildIndex + ".txt";
-        //string path = "Assets/Resources/LevelData/level1.txt";
-        levelData = FileReader.ReadTextFile(path);
-        //Debug.Log(levelData == null);
+        textFile = Resources.Load<TextAsset>("LevelData/level" + SceneManager.GetActiveScene().buildIndex );
+        levelData = FileReader.TextAssetToList(textFile);
     }
 
     private void GenerateRowFromList()
@@ -136,8 +136,8 @@ public class Level : MonoBehaviour
     {
         if (ObjectManager.Player.currentLives == 0)
         {
-            ObjectManager.GameOverPanel.gameObject.SetActive(true);
             Pause.PauseGame();
+            ObjectManager.GameOverPanel.gameObject.SetActive(true);
         }
     }
     private void Win()
@@ -145,8 +145,8 @@ public class Level : MonoBehaviour
         if(levelData.Count<=0 && ObjectManager.Player.currentLives > 0)
         {
             IsEnd = true;
-            timer += Time.deltaTime;
-            if (timer > 3f)
+            distanceCounter += AutoScrollBackground.ScrollSpeed * Time.deltaTime;
+            if (distanceCounter > 3f)
             {
                 ObjectManager.CompletionPanel.gameObject.SetActive(true);
                 Pause.PauseGame();

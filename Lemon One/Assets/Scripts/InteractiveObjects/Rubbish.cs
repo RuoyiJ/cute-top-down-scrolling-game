@@ -32,6 +32,8 @@ public class Rubbish : CollidableController {
         {
             //player's currentLives--
             StartCoroutine(ResetPlayer());
+            Player.ResetPlayer();
+            //obsCollider.enabled = false;
 
             //TO DO: COROUTINE ON BLINKING PLAYER IMAGE
         }
@@ -40,7 +42,9 @@ public class Rubbish : CollidableController {
     private IEnumerator ResetPlayer()
     {
         Player.currentLives--;
-        obsCollider.enabled = false;
+        //Pause.PauseGame();
+        //yield return new WaitForSecondsRealtime(0.5f);
+        //Pause.ResumeGame();
         yield return null;
 
     }
